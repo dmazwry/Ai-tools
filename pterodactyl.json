@@ -1,0 +1,65 @@
+{
+  "name": "WhatsApp Gemini Bot",
+  "description": "Bot WhatsApp dengan integrasi Gemini AI",
+  "version": "1.0.0",
+  "startup": "npm start",
+  "config": {
+    "files": {
+      ".env": {
+        "parser": "properties",
+        "find": {
+          "GEMINI_API_KEY": "GEMINI_API_KEY=",
+          "PORT": "PORT=",
+          "NODE_ENV": "NODE_ENV="
+        }
+      }
+    },
+    "startup": {
+      "done": "WhatsApp Bot dengan Gemini AI berhasil terkoneksi!",
+      "userInteraction": [
+        "QR Code WhatsApp Bot:"
+      ]
+    },
+    "logs": {
+      "custom": true,
+      "location": "logs/combined.log"
+    },
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\napt update\napt install -y curl\ncurl -fsSL https://deb.nodesource.com/setup_18.x | bash -\napt-get install -y nodejs\nnpm install\necho \"Installation complete!\"",
+      "container": "node:18-bullseye",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Gemini API Key",
+      "description": "API Key untuk Google Gemini AI",
+      "env_variable": "GEMINI_API_KEY",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string"
+    },
+    {
+      "name": "Port",
+      "description": "Port untuk server bot",
+      "env_variable": "PORT",
+      "default_value": "3000",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|between:1,65535"
+    },
+    {
+      "name": "Node Environment",
+      "description": "Environment mode untuk Node.js",
+      "env_variable": "NODE_ENV",
+      "default_value": "production",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:development,production"
+    }
+  ]
+}
